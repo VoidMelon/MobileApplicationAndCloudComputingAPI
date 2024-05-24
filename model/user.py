@@ -35,11 +35,10 @@ class User(Base):
     email_verified: Mapped[str] = mapped_column(nullable=False)
     password: Mapped[str] = mapped_column(nullable=False)
     sign_up_date: Mapped[datetime] = mapped_column(nullable=False)
-    sessions: Mapped[List["Session"]] = relationship(back_populates="creator")  # One directional no parameters on the relationship() function
-
+    sessions: Mapped[List["Session"]] = relationship(
+        back_populates="creator")  # One directional no parameters on the relationship() function
 
     # Self-Referential Many-To-Many for modelling friend list and pending
-
 
     friend_to: Mapped[List["User"]] = relationship(
         "User",

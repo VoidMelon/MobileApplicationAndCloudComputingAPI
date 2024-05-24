@@ -1,8 +1,20 @@
 from flask import Flask, request, make_response, render_template
-from flask_restful import Resource, Api
+from flask_restful import Api
+from flask_sqlalchemy.session import Session
+from sqlalchemy import create_engine
 
 app = Flask(__name__)
 api = Api(app)
+
+# dialect+driver://username:password@host:port/database
+
+# conn = sqlite3.connect('mobile.db')
+# print(conn)
+
+@app.route('/')
+def index():
+    print("Hello World!")
+    return "Hello World!"
 
 
 # @app.route("/")
