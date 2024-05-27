@@ -7,10 +7,7 @@ from alembic import context
 
 from model.base import Base
 
-from model.session_type import Type
-from model.environment import EnvironmentData
-from model.user import User
-from model.session import Session
+from model.models import EnvironmentData,User,Session,Type
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
