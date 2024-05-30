@@ -31,7 +31,7 @@ def index():
 
 
 # Initialize Firestore DB
-
+#cred = credentials.Cert
 
 # @app.route("/<name>")
 # def hello(name):
@@ -46,6 +46,8 @@ def index():
 # @app.route("/post/<int:post_id")
 # def show_post(post_id):
 #     return f"Post {post_id}!"
+
+
 
 
 if __name__ == '__main__':
