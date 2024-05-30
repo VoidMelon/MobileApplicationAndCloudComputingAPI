@@ -1,14 +1,12 @@
 from flask import request, make_response, jsonify
 from flask_restful import Resource
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
 
 from db.userdb import insert_user_db, delete_user_db
 
 
 def validate_token(request):
     token = request.headers.get('Authorization')
-    return True  # return the result of checking if the token is euqal with the one in the config file
+    return True  # return the result of checking if the token is equal with the one in the config file
 
 
 #inserire path per raggiungere l'api
