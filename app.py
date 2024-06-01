@@ -1,7 +1,10 @@
+from collections import UserList
+
 from flask import Flask, request, make_response, render_template
 from flask_restful import Api
-from flask_sqlalchemy.session import Session
-from sqlalchemy import create_engine
+
+
+from userService import UserResource
 
 app = Flask(__name__)
 api = Api(app)
@@ -47,7 +50,7 @@ def index():
 # def show_post(post_id):
 #     return f"Post {post_id}!"
 
-
+api.add_resource(UserResource, '/user', '/user/<int:user_id>')
 
 
 if __name__ == '__main__':

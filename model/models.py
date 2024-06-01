@@ -94,6 +94,7 @@ class Session(Base):
     creator: Mapped["User"] = relationship(back_populates="sessions")
     environment_data: Mapped[List["EnvironmentData"]] = relationship(back_populates="session")
     session_type: Mapped["Type"] = relationship()  # One Directional One-To-One Relationship
+    session_type_id: Mapped[int] = mapped_column(ForeignKey("session_type.id"))
 
 
 class EnvironmentData(Base):

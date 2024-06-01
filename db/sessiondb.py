@@ -12,5 +12,5 @@ def insert_session_db(session_parameters):
         try:
             s.add(session)
         except Exception as err:
-            return {'msg': "Error occurred while trying to insert a session"}, 500
+            return {'msg': "Error occurred while trying to insert a session", 'err': str(err)}, 500
         return {'msg': "Session successfully inserted"}, 201
