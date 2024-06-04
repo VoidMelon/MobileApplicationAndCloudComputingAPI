@@ -12,6 +12,7 @@ Session = sessionmaker(engine)
 
 def insert_user_db(user_parameters):
     with Session() as session:
+        print(user_parameters)
         user = User(**user_parameters)
         try:
             session.add(user)
@@ -41,7 +42,6 @@ def get_user_db(userid):
     with Session() as session:
         try:
             user = session.query(User).get(userid)
-            datetime_string = user.sign_up_date
         except Exception as err:
             session.rollback()
             return {'msg': "Error during the retrieving of the user: with error:", 'err': str(err)}, 500

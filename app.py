@@ -3,7 +3,7 @@ from collections import UserList
 from flask import Flask, request, make_response, render_template
 from flask_restful import Api
 
-
+from sessionService import SessionResource
 from userService import UserResource
 
 app = Flask(__name__)
@@ -51,6 +51,7 @@ def index():
 #     return f"Post {post_id}!"
 
 api.add_resource(UserResource, '/user', '/user/<int:user_id>')
+api.add_resource(SessionResource, '/user/<int:user_id>/sessions', '/user/<int:user_id>/sessions/<int:session_id>')
 
 
 if __name__ == '__main__':
