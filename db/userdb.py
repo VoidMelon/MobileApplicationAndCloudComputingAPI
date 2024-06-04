@@ -2,7 +2,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 import json
 
-from model.models import User
+from model.models import User, UserSchema
 
 # engine = create_engine("postgresql://melon:MobileCloud!@localhost/mobile-project")
 engine = create_engine("postgresql://melon:MobileCloud!@localhost:5433/postgres")
@@ -47,15 +47,16 @@ def get_user_db(userid):
             return {'msg': "Error during the retrieving of the user: with error:", 'err': str(err)}, 500
         if user is None:
             return {'msg': "User does not exist"}, 404
-        user_dictionary = user.__dict__
-        keys = list(user_dictionary.keys())
-        user_dictionary.pop(keys[0])
-        user_dictionary = dict(user_dictionary)
-        user_dictionary["sign_up_date"] = str(datetime_string)
-        print(user_dictionary)
-        print(type(user_dictionary))
-        json_formatted_user = json.dumps(user_dictionary, sort_keys=True)
-        return json_formatted_user, 200
+        result = UserSchema().dump(user)
+        # user_dictionary = user.__dict__
+        # keys = list(user_dictionary.keys())
+        # user_dictionary.pop(keys[0])
+        # user_dictionary = dict(user_dictionary)
+        # user_dictionary["sign_up_date"] = str(datetime_string)
+        # print(user_dictionary)
+        # print(type(user_dictionary))
+        # json_formatted_user = json.dumps(user_dictionary, sort_keys=True)
+        return result, 200
 
 
 def update_user_db(userid, user_parameters):

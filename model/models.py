@@ -7,6 +7,8 @@ from sqlalchemy.orm import mapped_column, Mapped, relationship
 
 from model.base import Base
 
+from marshmallow import Schema, fields
+
 metadata = Base.metadata
 
 friendship = Table(
@@ -109,3 +111,31 @@ class EnvironmentData(Base):
     session_id: Mapped[int] = mapped_column(ForeignKey('sessions.id'))
     session: Mapped["Session"] = relationship(back_populates="environment_data")
 
+
+class EnvironmentDataSchema(Schema):
+    id = fields.Integer()
+    temperature = fields.Float()
+    humidity = fields.Float()
+    pressure = fields.Float()
+    latitude = fields.Float()
+    longitude = fields.Float()
+    date_of_measurement = fields.DateTime()
+    session_id = fields.Integer()
+
+
+class SessionSchema(Schema):
+    id = fields.Integer()
+    name = fields.Str()
+    date_of_creation = fields.DateTime()
+    date_of_end = fields.DateTime()
+    creator_id = fields.Integer()
+    session_type_id = fields.Integer()
+
+
+class UserSchema(Schema):
+    id = fields.Integer()
+    name = fields.Str()
+    surname = fields.Str()
+    email = fields.Str()
+    email_verified = fields.Boolean()
+    sign_up_date = fields.DateTime()
