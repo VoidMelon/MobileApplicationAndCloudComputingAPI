@@ -10,7 +10,6 @@ Sessions = sessionmaker(engine)
 
 def insert_session_db(userid, session_parameters):
     with Sessions() as s:
-        print(session_parameters)
         try:
             user = s.query(User).get(userid)
         except Exception as err:

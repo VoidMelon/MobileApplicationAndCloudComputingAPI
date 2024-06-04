@@ -12,7 +12,6 @@ Session = sessionmaker(engine)
 
 def insert_user_db(user_parameters):
     with Session() as session:
-        print(user_parameters)
         user = User(**user_parameters)
         try:
             session.add(user)
