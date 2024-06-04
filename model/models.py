@@ -108,3 +108,4 @@ class EnvironmentData(Base):
     date_of_measurement: Mapped[datetime] = mapped_column(nullable=False)
     session_id: Mapped[int] = mapped_column(ForeignKey('sessions.id'))
     session: Mapped["Session"] = relationship(back_populates="environment_data")
+

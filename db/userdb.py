@@ -25,7 +25,7 @@ def insert_user_db(user_parameters):
 def delete_user_db(userid):
     with Session() as session:
         try:
-            user = session.query(User).get(id)
+            user = session.query(User).get(userid)
         except Exception as err:
             return {'msg': "User Not Found", 'err': str(err)}, 404
         try:
@@ -41,7 +41,7 @@ def get_user_db(userid):
     with Session() as session:
         try:
             user = session.query(User).get(userid)
-            datetime_string=user.sign_up_date.__str__
+            datetime_string = user.sign_up_date
         except Exception as err:
             session.rollback()
             return {'msg': "Error during the retrieving of the user: with error:", 'err': str(err)}, 500

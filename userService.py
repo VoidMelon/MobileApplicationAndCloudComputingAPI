@@ -26,15 +26,15 @@ class UserResource(Resource):
         msg, code = insert_user_db(parameters)
         return make_response(jsonify(msg), code)
 
-    def put(self, userid):
+    def put(self, user_id):
         if not validate_token(request):
             return make_response(jsonify({'msg': 'Invalid Token'}, 401))
         parameters = request.json
-        msg, code = update_user_db(userid, parameters)
+        msg, code = update_user_db(user_id, parameters)
         return make_response(jsonify(msg), code)
 
-    def delete(self, userid):
+    def delete(self, user_id):
         if not validate_token(request):
             return make_response(jsonify({'msg': 'Invalid Token'}, 401))
-        msg, code = delete_user_db(userid)
+        msg, code = delete_user_db(user_id)
         return make_response(jsonify(msg), code)
