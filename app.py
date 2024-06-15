@@ -1,9 +1,9 @@
-from collections import UserList
 
 from flask import Flask, request, make_response, render_template
 from flask_restful import Api
 
-from sessionService import SessionResource
+from environmentService import EnvironmentResource, EnvironmentDatasResource
+from sessionService import SessionResource, SessionsResource
 from userService import UserResource
 
 app = Flask(__name__)
@@ -13,11 +13,6 @@ api = Api(app)
 
 # conn = sqlite3.connect('mobile.db')
 # print(conn)
-
-@app.route('/')
-def index():
-    print("Hello World!")
-    return "Hello World!"
 
 
 # @app.route("/")
@@ -51,7 +46,10 @@ def index():
 #     return f"Post {post_id}!"
 
 api.add_resource(UserResource, '/user', '/user/<int:user_id>')
-api.add_resource(SessionResource, '/user/<int:user_id>/sessions', '/user/<int:user_id>/sessions/<int:session_id>')
+api.add_resource(SessionResource, '/user/<int:user_id>/session', '/user/<int:user_id>/session/<int:session_id>')
+api.add_resource(SessionsResource, '/user/<int:user_id>/allsessions')
+api.add_resource(EnvironmentResource, '/users/<int:user_id>/sessions/<int:session_id>/environmentdata')
+api.add_resource(EnvironmentDatasResource, '/users/<int:user_id>/sessions/<int:session_id>/environmentdatas')
 
 
 if __name__ == '__main__':

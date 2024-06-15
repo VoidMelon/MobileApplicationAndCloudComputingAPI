@@ -42,6 +42,7 @@ def delete_session_db(user_id, session_id):
         try:
             if session in user.sessions:
                 user.sessions.remove(session)
+                session.environment_data = []
                 s.delete(session)
         except Exception as err:
             s.rollback()
@@ -78,6 +79,26 @@ def get_all_sessions_db(user_id):
         sessions_created = user.sessions
         if sessions_created is None:
             sessions_created = []
-            return sessions_created
+            return SessionSchema().dump(sessions_created, many=True)
         result = SessionSchema().dump(sessions_created, many=True)
         return result, 200
+
+
+def update_session_db(user_id, session_id, session_parameters):
+    with Sessions() as s:
+        try:
+            user = s.query(User).get(user_id)
+        except Exception as err:
+            return {'msg': "Error during the retrieving of the user", 'err': str(err)}, 500
+        try:
+            session = s.query(Session).get(session_id)
+        except Exception:
+            return {'msg': "Error during the retrieving of the session"}, 500
+        if session not in user.sessions:
+            return {'msg': "Denied"}, 403
+        for key, value in session_parameters.items():
+            if hasattr(session, key):
+                setattr(session, key, value)
+        s.commit()
+        return {'msg': "Session successfully updated"}, 200
+

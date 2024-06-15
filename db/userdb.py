@@ -67,7 +67,9 @@ def update_user_db(userid, user_parameters):
             return {'msg': "Error while trying to retrieve the user", 'err': str(err)}, 404
         if user is None:
             return {'msg': "User does not exist"}, 404
-        for key, value in user_parameters:
+        print(user_parameters)
+        print(type(user_parameters))
+        for key, value in user_parameters.items():
             if hasattr(user, key):
                 setattr(user, key, value)
         session.commit()

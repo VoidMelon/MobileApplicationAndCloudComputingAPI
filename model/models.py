@@ -36,7 +36,7 @@ class User(Base):
     password: Mapped[str] = mapped_column(nullable=False)
     sign_up_date: Mapped[datetime] = mapped_column(nullable=False)
     sessions: Mapped[List["Session"]] = relationship(
-        back_populates="creator")  # One directional no parameters on the relationship() function
+        back_populates="creator", cascade="all, delete-orphan")  # One directional no parameters on the relationship() function
 
     # Self-Referential Many-To-Many for modelling friend list and pending
 
@@ -94,7 +94,7 @@ class Session(Base):
     active: Mapped[bool] = mapped_column(nullable=False)
     creator_id: Mapped[int] = mapped_column(ForeignKey("users.id"))
     creator: Mapped["User"] = relationship(back_populates="sessions")
-    environment_data: Mapped[List["EnvironmentData"]] = relationship(back_populates="session")
+    environment_data: Mapped[List["EnvironmentData"]] = relationship(back_populates="session", cascade="all, delete-orphan")
     session_type: Mapped["Type"] = relationship()  # One Directional One-To-One Relationship
     session_type_id: Mapped[int] = mapped_column(ForeignKey("session_type.id"))
 
