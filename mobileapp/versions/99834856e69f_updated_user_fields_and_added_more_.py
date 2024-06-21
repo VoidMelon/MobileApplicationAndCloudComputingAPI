@@ -1,8 +1,8 @@
-"""Added Model Tables
+"""Updated User Fields and Added More Sessions Fields
 
-Revision ID: 8b5a20866a96
+Revision ID: 99834856e69f
 Revises: 
-Create Date: 2024-05-28 01:28:52.938025
+Create Date: 2024-06-21 19:54:08.677076
 
 """
 from typing import Sequence, Union
@@ -12,7 +12,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision: str = '8b5a20866a96'
+revision: str = '99834856e69f'
 down_revision: Union[str, None] = None
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None
@@ -26,7 +26,7 @@ def upgrade() -> None:
     sa.PrimaryKeyConstraint('id')
     )
     op.create_table('users',
-    sa.Column('id', sa.Integer(), autoincrement=True, nullable=False),
+    sa.Column('id', sa.String(), nullable=False),
     sa.Column('name', sa.String(), nullable=False),
     sa.Column('surname', sa.String(), nullable=False),
     sa.Column('email', sa.String(), nullable=False),
@@ -37,15 +37,15 @@ def upgrade() -> None:
     sa.UniqueConstraint('email')
     )
     op.create_table('friendship',
-    sa.Column('friend_to', sa.Integer(), nullable=False),
-    sa.Column('user', sa.Integer(), nullable=False),
+    sa.Column('friend_to', sa.String(), nullable=False),
+    sa.Column('user', sa.String(), nullable=False),
     sa.ForeignKeyConstraint(['friend_to'], ['users.id'], ),
     sa.ForeignKeyConstraint(['user'], ['users.id'], ),
     sa.PrimaryKeyConstraint('friend_to', 'user')
     )
     op.create_table('pending',
-    sa.Column('waiting', sa.Integer(), nullable=False),
-    sa.Column('for_confirmation', sa.Integer(), nullable=False),
+    sa.Column('waiting', sa.String(), nullable=False),
+    sa.Column('for_confirmation', sa.String(), nullable=False),
     sa.ForeignKeyConstraint(['for_confirmation'], ['users.id'], ),
     sa.ForeignKeyConstraint(['waiting'], ['users.id'], ),
     sa.PrimaryKeyConstraint('waiting', 'for_confirmation')
@@ -56,8 +56,13 @@ def upgrade() -> None:
     sa.Column('date_of_creation', sa.DateTime(), nullable=False),
     sa.Column('date_of_end', sa.DateTime(), nullable=False),
     sa.Column('active', sa.Boolean(), nullable=False),
-    sa.Column('creator_id', sa.Integer(), nullable=False),
+    sa.Column('creator_id', sa.String(), nullable=False),
+    sa.Column('avgSpeed', sa.Float(), nullable=False),
+    sa.Column('number_of_step', sa.Integer(), nullable=False),
+    sa.Column('totalDistance', sa.Float(), nullable=False),
+    sa.Column('session_type_id', sa.Integer(), nullable=False),
     sa.ForeignKeyConstraint(['creator_id'], ['users.id'], ),
+    sa.ForeignKeyConstraint(['session_type_id'], ['session_type.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_table('environment_data',

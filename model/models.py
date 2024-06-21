@@ -2,7 +2,7 @@ from enum import Enum
 from datetime import datetime
 from typing import List
 
-from sqlalchemy import Table, Column, Integer, ForeignKey
+from sqlalchemy import Table, Column, ForeignKey, String
 from sqlalchemy.orm import mapped_column, Mapped, relationship
 
 from model.base import Base
@@ -14,21 +14,21 @@ metadata = Base.metadata
 friendship = Table(
     "friendship",
     Base.metadata,
-    Column("friend_to", Integer, ForeignKey("users.id"), primary_key=True),
-    Column("user", Integer, ForeignKey("users.id"), primary_key=True),
+    Column("friend_to", String, ForeignKey("users.id"), primary_key=True),
+    Column("user", String, ForeignKey("users.id"), primary_key=True),
 )
 
 pending = Table(
     "pending",
     Base.metadata,
-    Column("waiting", Integer, ForeignKey("users.id"), primary_key=True),
-    Column("for_confirmation", Integer, ForeignKey("users.id"), primary_key=True),
+    Column("waiting", String, ForeignKey("users.id"), primary_key=True),
+    Column("for_confirmation", String, ForeignKey("users.id"), primary_key=True),
 )
 
 
 class User(Base):
     __tablename__ = 'users'
-    id: Mapped[int] = mapped_column(autoincrement=True, primary_key=True)
+    id: Mapped[str] = mapped_column(primary_key=True)
     name: Mapped[str] = mapped_column(nullable=False)
     surname: Mapped[str] = mapped_column(nullable=False)
     email: Mapped[str] = mapped_column(unique=True, nullable=False)
@@ -92,8 +92,11 @@ class Session(Base):
     date_of_creation: Mapped[datetime] = mapped_column(nullable=False)
     date_of_end: Mapped[datetime] = mapped_column(nullable=False)
     active: Mapped[bool] = mapped_column(nullable=False)
-    creator_id: Mapped[int] = mapped_column(ForeignKey("users.id"))
+    creator_id: Mapped[str] = mapped_column(ForeignKey("users.id"))
     creator: Mapped["User"] = relationship(back_populates="sessions")
+    avgSpeed: Mapped[float] = mapped_column(nullable=False)
+    number_of_step: Mapped[int] = mapped_column(nullable=False)
+    totalDistance: Mapped[float] = mapped_column(nullable=False)
     environment_data: Mapped[List["EnvironmentData"]] = relationship(back_populates="session", cascade="all, delete-orphan")
     session_type: Mapped["Type"] = relationship()  # One Directional One-To-One Relationship
     session_type_id: Mapped[int] = mapped_column(ForeignKey("session_type.id"))
@@ -128,12 +131,12 @@ class SessionSchema(Schema):
     name = fields.Str()
     date_of_creation = fields.DateTime()
     date_of_end = fields.DateTime()
-    creator_id = fields.Integer()
+    creator_id = fields.String()
     session_type_id = fields.Integer()
 
 
 class UserSchema(Schema):
-    id = fields.Integer()
+    id = fields.Str()
     name = fields.Str()
     surname = fields.Str()
     email = fields.Str()
