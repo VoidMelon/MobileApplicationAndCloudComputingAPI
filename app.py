@@ -46,13 +46,13 @@ api = Api(app)
 # def show_post(post_id):
 #     return f"Post {post_id}!"
 
-api.add_resource(UserResource, '/user', '/user/<str:user_id>')
-api.add_resource(SessionResource, '/user/<str:user_id>/session', '/user/<str:user_id>/session/<int:session_id>')
-api.add_resource(SessionsResource, '/user/<str:user_id>/allsessions')
-api.add_resource(EnvironmentResource, '/users/<str:user_id>/sessions/<int:session_id>/environmentdata')
-api.add_resource(EnvironmentDatasResource, '/users/<str:user_id>/sessions/<int:session_id>/environmentdatas')
+api.add_resource(UserResource, '/user', '/user/<string:user_id>')
+api.add_resource(SessionResource, '/user/<string:user_id>/session', '/user/<string:user_id>/session/<int:session_id>')
+api.add_resource(SessionsResource, '/user/<string:user_id>/allsessions')
+api.add_resource(EnvironmentResource, '/users/<string:user_id>/sessions/<int:session_id>/environmentdata')
+api.add_resource(EnvironmentDatasResource, '/users/<string:user_id>/sessions/<int:session_id>/environmentdatas')
 api.add_resource(FriendResource, '/friendlist', '/friendlist/remove')
-api.add_resource(PendingResource, '/pendinglist', '/pendinglist/confirm', 'pendinglist/remove')
+api.add_resource(PendingResource, '/pendinglist', '/pendinglist/confirm', '/pendinglist/remove')
 api.add_resource(SearchResource,'/search', '/search/sendfriendrequest')
 
 

@@ -31,9 +31,10 @@ class User(Base):
     id: Mapped[str] = mapped_column(primary_key=True)
     name: Mapped[str] = mapped_column(nullable=False)
     surname: Mapped[str] = mapped_column(nullable=False)
+    username: Mapped[str] = mapped_column(unique=True)
+    age: Mapped[int] = mapped_column(nullable=False)
     email: Mapped[str] = mapped_column(unique=True, nullable=False)
     email_verified: Mapped[str] = mapped_column(nullable=False)
-    password: Mapped[str] = mapped_column(nullable=False)
     sign_up_date: Mapped[datetime] = mapped_column(nullable=False)
     sessions: Mapped[List["Session"]] = relationship(
         back_populates="creator", cascade="all, delete-orphan")  # One directional no parameters on the relationship() function
