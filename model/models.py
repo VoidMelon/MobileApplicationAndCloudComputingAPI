@@ -14,15 +14,15 @@ metadata = Base.metadata
 friendship = Table(
     "friendship",
     Base.metadata,
-    Column("friend_to", String, ForeignKey("users.id", ondelete="CASCADE"), primary_key=True),
-    Column("user", String, ForeignKey("users.id", ondelete="CASCADE"), primary_key=True),
+    Column("friend_to", String, ForeignKey("users.id"), primary_key=True),
+    Column("user", String, ForeignKey("users.id"), primary_key=True),
 )
 
 pending = Table(
     "pending",
     Base.metadata,
-    Column("waiting", String, ForeignKey("users.id", ondelete="CASCADE"), primary_key=True),
-    Column("for_confirmation", String, ForeignKey("users.id", ondelete="CASCADE"), primary_key=True),
+    Column("waiting", String, ForeignKey("users.id"), primary_key=True),
+    Column("for_confirmation", String, ForeignKey("users.id"), primary_key=True),
 )
 
 
@@ -46,32 +46,28 @@ class User(Base):
         secondary=friendship,
         primaryjoin=id == friendship.c.user,
         secondaryjoin=id == friendship.c.friend_to,
-        back_populates="users",
-        cascade="all, delete-orphan"
+        back_populates="users"
     )
     users: Mapped[List["User"]] = relationship(
         "User",
         secondary=friendship,
         primaryjoin=id == friendship.c.friend_to,
         secondaryjoin=id == friendship.c.user,
-        back_populates="friend_to",
-        cascade="all, delete-orphan"
+        back_populates="friend_to"
     )
     waiting: Mapped[List["User"]] = relationship(
         "User",
         secondary=pending,
         primaryjoin=id == pending.c.for_confirmation,
         secondaryjoin=id == pending.c.waiting,
-        back_populates="for_confirmation",
-        cascade="all, delete-orphan"
+        back_populates="for_confirmation"
     )
     for_confirmation: Mapped[List["User"]] = relationship(
         "User",
         secondary=pending,
         primaryjoin=id == pending.c.waiting,
         secondaryjoin=id == pending.c.for_confirmation,
-        back_populates="waiting",
-        cascade="all, delete-orphan"
+        back_populates="waiting"
     )
 
 

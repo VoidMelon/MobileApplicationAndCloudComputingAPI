@@ -26,7 +26,7 @@ class PendingResource(Resource):
 
     def post(self):
         user_id = request.json.get('user_id')
-        friend_in_pending_id = request.json.get('pending_id')
+        friend_in_pending_id = request.json.get('accepted_friendship_by_user_id')
         msg, code = accept_friend_in_pending(user_id, friend_in_pending_id)
         return make_response(jsonify(msg), code)
 

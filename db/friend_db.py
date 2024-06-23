@@ -59,10 +59,8 @@ def accept_friend_in_pending(user_id, accepted_friendship_by_user_id):
             try:
 
                 user.for_confirmation.remove(accepted_friendship_by_user)
-                accepted_friendship_by_user.waiting.remove(user)
 
                 accepted_friendship_by_user.users.append(user)
-                user.friend_to.append(accepted_friendship_by_user)
 
                 session.commit()
             except Exception as e:
@@ -107,7 +105,6 @@ def decline_friend_request(user_id, accepted_friend_id):
         if user in accepted_friend.waiting:
             try:
                 accepted_friend.waiting.remove(user)
-                user.for_confirmation.remove(accepted_friend)
                 session.commit()
             except Exception as e:
                 return {'msg': 'Error while trying to do some action in the DB', 'err': str(e)}, 500
@@ -128,13 +125,13 @@ def remove_friend_in_friendlist(user_id, remove_friend_id):
             return {'msg': 'Error while trying to retrieve the friend', 'err': str(e)}, 500
         if remove_friend in user.friend_to:
             try:
-                user.friend_to.remove(user)
+                user.friend_to.remove(remove_friend)
                 session.commit()
             except Exception as e:
                 return {'msg': 'Error while trying to do some action in the DB', 'err': str(e)}, 500
         elif remove_friend in user.users:
             try:
-                user.users.remove(user)
+                user.users.remove(remove_friend)
                 session.commit()
             except Exception as e:
                 return {'msg': 'Error while trying to do some action in the DB', 'err': str(e)}, 500
