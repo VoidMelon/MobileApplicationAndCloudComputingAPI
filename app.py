@@ -3,6 +3,7 @@ from flask import Flask, request, make_response, render_template
 from flask_restful import Api
 
 from environmentService import EnvironmentResource, EnvironmentDatasResource
+from friendService import FriendResource, PendingResource, SearchResource
 from sessionService import SessionResource, SessionsResource
 from userService import UserResource
 
@@ -50,8 +51,9 @@ api.add_resource(SessionResource, '/user/<str:user_id>/session', '/user/<str:use
 api.add_resource(SessionsResource, '/user/<str:user_id>/allsessions')
 api.add_resource(EnvironmentResource, '/users/<str:user_id>/sessions/<int:session_id>/environmentdata')
 api.add_resource(EnvironmentDatasResource, '/users/<str:user_id>/sessions/<int:session_id>/environmentdatas')
-#api.add_resource(FriendResource, /friendlist/<str:user_id>, '/friendlist/remove/<str:user_id>)
-#api.add_resource(PendingResource, /pendinglist/<str:user_id>, '/pendinglist/confirm/<str:user_id>', 'pendinglist/remove/<str:user_id>')
+api.add_resource(FriendResource, '/friendlist', '/friendlist/remove')
+api.add_resource(PendingResource, '/pendinglist', '/pendinglist/confirm', 'pendinglist/remove')
+api.add_resource(SearchResource,'/search', '/search/sendfriendrequest')
 
 
 if __name__ == '__main__':
