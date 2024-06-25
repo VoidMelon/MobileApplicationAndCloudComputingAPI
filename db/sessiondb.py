@@ -21,11 +21,11 @@ def insert_session_db(userid, session_parameters):
             session.creator = user
             s.add(session)
             user.sessions.append(session)
+            s.commit()
         except Exception as err:
             s.rollback()
             return {'msg': "Error occurred while trying to insert a session", 'err': str(err)}, 500
-        s.commit()
-        return {'msg': "Session successfully inserted"}, 201
+        return {"id": session.id, "msg": "Session successfully inserted"}, 201
 
 
 def delete_session_db(user_id, session_id):
@@ -44,10 +44,10 @@ def delete_session_db(user_id, session_id):
                 user.sessions.remove(session)
                 session.environment_data = []
                 s.delete(session)
+                s.commit()
         except Exception as err:
             s.rollback()
             return {'msg': "Error occurred while trying to delete a session", 'err': str(err)}, 500
-        s.commit()
         return {'msg': "Session successfully deleted"}, 200
 
 
