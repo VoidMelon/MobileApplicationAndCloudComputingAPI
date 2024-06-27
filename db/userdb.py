@@ -5,7 +5,10 @@ import json
 from model.models import User, UserSchema
 
 # engine = create_engine("postgresql://melon:MobileCloud!@localhost/mobile-project")
-engine = create_engine("postgresql://melon:MobileCloud!@localhost:5433/postgres")
+# engine = create_engine("postgresql://melon:MobileCloud!@localhost:5433/postgres")
+# 93.147.17.126:6000
+# engine = create_engine("postgresql://postgres:MobileCloud!@192.168.1.250:5432/postgres")
+engine = create_engine("postgresql://postgres:MobileCloud!@93.147.17.126:6000/postgres")
 
 Session = sessionmaker(engine)
 

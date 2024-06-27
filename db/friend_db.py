@@ -4,7 +4,9 @@ from sqlalchemy.orm import sessionmaker
 from model.models import User, UserSchema, friendship
 
 # engine = create_engine("postgresql://melon:MobileCloud!@localhost/mobile-project")
-engine = create_engine("postgresql://melon:MobileCloud!@localhost:5433/postgres")
+# engine = create_engine("postgresql://melon:MobileCloud!@localhost:5433/postgres")
+# engine = create_engine("postgresql://postgres:MobileCloud!@192.168.1.250:5432/postgres")
+engine = create_engine("postgresql://postgres:MobileCloud!@93.147.17.126:6000/postgres")
 Sessions = sessionmaker(engine)
 
 
@@ -58,7 +60,7 @@ def accept_friend_in_pending(user_id, accepted_friendship_by_user_id):
         if accepted_friendship_by_user not in user.friend_to:
             try:
 
-                user.for_confirmation.remove(accepted_friendship_by_user)
+                user.waiting.remove(accepted_friendship_by_user)
 
                 accepted_friendship_by_user.users.append(user)
 

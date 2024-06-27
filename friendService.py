@@ -6,8 +6,7 @@ from db.friend_db import get_friendlist, get_pendinglist, accept_friend_in_pendi
 
 
 class FriendResource(Resource):
-    def get(self):
-        user_id = request.json.get('user_id')
+    def get(self, user_id):
         msg, code = get_friendlist(user_id)
         return make_response(jsonify(msg), code)
 
@@ -19,8 +18,7 @@ class FriendResource(Resource):
 
 
 class PendingResource(Resource):
-    def get(self):
-        user_id = request.json.get('user_id')
+    def get(self, user_id):
         msg, code = get_pendinglist(user_id)
         return make_response(jsonify(msg), code)
 
@@ -38,8 +36,7 @@ class PendingResource(Resource):
 
 
 class SearchResource(Resource):
-    def get(self):
-        username = request.json.get('username')
+    def get(self, username):
         msg, code = get_user_by_username(username)
         return make_response(jsonify(msg), code)
 

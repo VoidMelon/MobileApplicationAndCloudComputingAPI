@@ -4,7 +4,9 @@ from sqlalchemy.orm import sessionmaker
 from model.models import User, SessionSchema, Session
 
 # engine = create_engine("postgresql://melon:MobileCloud!@localhost/mobile-project")
-engine = create_engine("postgresql://melon:MobileCloud!@localhost:5433/postgres")
+# engine = create_engine("postgresql://melon:MobileCloud!@localhost:5433/postgres")
+# engine = create_engine("postgresql://postgres:MobileCloud!@192.168.1.250:5432/postgres")
+engine = create_engine("postgresql://postgres:MobileCloud!@93.147.17.126:6000/postgres")
 Sessions = sessionmaker(engine)
 
 
